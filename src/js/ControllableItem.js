@@ -1,4 +1,4 @@
-class ControllableItem {
+export default class ControllableItem {
   constructor() {
     this.isActive = false;
   }
@@ -9,5 +9,9 @@ class ControllableItem {
 
   makeUnactive() {
     this.isActive = false;
+  }
+
+  enterHandler() {
+    
   }
 }

@@ -1,4 +1,6 @@
-class Cell extends ControllableItem {
+import ControllableItem from "./ControllableItem";
+
+export default class Cell extends ControllableItem {
   constructor(y, x) {
     super();
     this.y = y;
@@ -10,7 +12,7 @@ class Cell extends ControllableItem {
   }
 
   get x() {
-    return this._y;
+    return this._x;
   }
 
   set x(value) {
@@ -59,6 +61,10 @@ class Cell extends ControllableItem {
   makeUnactive() {
     super.makeUnactive();
     this.el.classList.remove("active-cell");
+  }
+
+  enterHandler() {
+    console.log(this);
   }
 
   addToBoard() {

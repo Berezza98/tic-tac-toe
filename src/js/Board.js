@@ -1,11 +1,18 @@
-class Field extends KeyBoardController{
+import KeyBoardController from "./KeyBoardController";
+import Cell from "./Cell";
+
+export default class Board extends KeyBoardController{
   constructor() {
     super();
     this.cells = [];
     this.addCells();
     this.makeFirstCellActive();
     this.makeControllable(this.cells);
-    console.log(this.cells);
+  }
+
+  get freeCells() {
+    const allCells = this.cells.flat();
+    return allCells.filter(el => !el.state);
   }
 
   addCells() {
