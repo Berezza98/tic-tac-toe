@@ -21,6 +21,7 @@ class KeyBoardController {
 
   addButtonControl(items) {
     this.addControlProps(items);
+    this.addKeyHandlers();
   }
 
   addControlProps(items) {
@@ -38,9 +39,21 @@ class KeyBoardController {
     });
   }
 
-  addKeyHandler() {
+  addKeyHandlers() {
     window.addEventListener("keydown", (e) => {
-
+      switch (e.keyCode) {
+        case 37:
+          alert('left');
+          break;
+        case 38:
+          alert('up');
+          break;
+        case 39:
+          alert('right');
+          break;
+        case 40:
+          break;
+      }
     });
   }
 
