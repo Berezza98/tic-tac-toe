@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 720px;
+  width: 1280px;
+  background: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+}
+
+.cell {
+  box-sizing: border-box;
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+}
+
+.active-cell {
+  border: 3px solid gold;
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.cross {
+  background-color: black;
+}
+
+.circle {
+  background-color: white;
+}
