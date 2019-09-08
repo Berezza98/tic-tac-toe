@@ -1,11 +1,23 @@
-import Board from "./Board";
-import Computer from "./Computer";
+import StartView from "./views/StartView";
 
 export default class Game {
-  constructor(userSelection) {
+  constructor() {
     this._counter = 0;
     this.computer = null;
-    this.userSelection = userSelection;
+    this._winner = null;
+  }
+
+  get winner() {
+    return this._winner;
+  }
+
+  set winner(value) {
+    let possibleValues = ["x", "o", "nobody"];
+    if (possibleValues.includes(value)) {
+      this._winner = value;
+    } else {
+      throw new Error("Not correct winner");
+    }
   }
 
   get counter() {
@@ -29,8 +41,11 @@ export default class Game {
     this._counter++;
   }
 
+  clearCounter() {
+    this._counter = 0;
+  }
+
   start() {
-    this.board = new Board();
-    this.computer = new Computer(this.userSelection, this.board);
+    this.startView = new StartView(this);
   }
 }

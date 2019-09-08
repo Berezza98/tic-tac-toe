@@ -1,5 +1,8 @@
-export default class ControllableItem {
+import EventEmitter from "./EventEmitter";
+
+export default class ControllableItem extends EventEmitter{
   constructor() {
+    super();
     this.isActive = false;
   }
 

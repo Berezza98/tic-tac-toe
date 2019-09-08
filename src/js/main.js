@@ -1,4 +1,6 @@
 import Game from "./Game";
 
-const game = new Game("x");
+const game = new Game();
 game.start();
+
+

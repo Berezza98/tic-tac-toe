@@ -1,5 +1,8 @@
-export default class KeyBoardController {
+import EventEmitter from "./EventEmitter";
+
+export default class KeyBoardController  extends EventEmitter {
   constructor() {
+    super();
     this._controllableItems = [];
     this._activeItem = null;
   }
@@ -40,57 +43,72 @@ export default class KeyBoardController {
           canGoTop: rowIndex > 0,
           canGoBottom: rowIndex < rowsCount - 1,
           canGoLeft: columnIndex > 0,
-          canGoRight: columnIndex < columnsCount - 1
+          canGoRight: columnIndex < columnsCount - 1,
+          x: columnIndex,
+          y: rowIndex
         });
       });
     });
   }
 
+  arrowHandler(e) {
+    const currentKeyCode = e.keyCode;
+    const { x, y } = this.activeItem;
+    switch (currentKeyCode) {
+      case 37:
+        // left
+        if (this.activeItem.canGoLeft) {
+          this.activeItem.makeUnactive();
+          this.controllableItems[y][x - 1].makeActive();
+        }
+        break;
+      case 38:
+        //up
+        if (this.activeItem.canGoTop) {
+          this.activeItem.makeUnactive();
+          this.controllableItems[y - 1][x].makeActive();
+        }
+        break;
+      case 39:
+        //right
+        if (this.activeItem.canGoRight) {
+          this.activeItem.makeUnactive();
+          this.controllableItems[y][x + 1].makeActive();
+        }
+        break;
+      case 40:
+        //bottom
+        if (this.activeItem.canGoBottom) {
+          this.activeItem.makeUnactive();
+          this.controllableItems[y + 1][x].makeActive();
+        }
+        break;
+    }
+  }
+
+  enterHandler(e) {
+    const currentKeyCode = e.keyCode;
+    if (currentKeyCode === 13) {
+      this.activeItem.enterHandler();
+    }
+  }
+
   addArrowHandlers() {
-    window.addEventListener("keydown", (e) => {
-      const currentKeyCode = e.keyCode;
-      const { x, y } = this.activeItem;
-      switch (currentKeyCode) {
-        case 37:
-          // left
-          if (this.activeItem.canGoLeft) {
-            this.activeItem.makeUnactive();
-            this.controllableItems[y][x - 1].makeActive();
-          }
-          break;
-        case 38:
-          //up
-          if (this.activeItem.canGoTop) {
-            this.activeItem.makeUnactive();
-            this.controllableItems[y - 1][x].makeActive();
-          }
-          break;
-        case 39:
-          //right
-          if (this.activeItem.canGoRight) {
-            this.activeItem.makeUnactive();
-            this.controllableItems[y][x + 1].makeActive();
-          }
-          break;
-        case 40:
-          //bottom
-          if (this.activeItem.canGoBottom) {
-            this.activeItem.makeUnactive();
-            this.controllableItems[y + 1][x].makeActive();
-          }
-          break;
-      }
-    });
+    this.bindedArrowHandler = this.arrowHandler.bind(this)
+    let that = this;
+    window.addEventListener("keydown", that.bindedArrowHandler);
   }
 
   addEnterHandler() {
-    window.addEventListener("keydown", (e) => {
-      const currentKeyCode = e.keyCode;
-      if (currentKeyCode === 13) {
-        this.activeItem.enterHandler();
-      }
-      
-    });
+    this.bindedEnterHandler = this.enterHandler.bind(this)
+    let that = this;
+    window.addEventListener("keydown", that.bindedEnterHandler);
+  }
+
+  removeHandlers() {
+    let that = this;
+    window.removeEventListener("keydown", that.bindedArrowHandler);
+    window.removeEventListener("keydown", that.bindedEnterHandler);
   }
 
 }

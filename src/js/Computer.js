@@ -13,15 +13,15 @@ export default class Computer {
     this._selectedShape = possibleValues.find(el => el !== value);
   }
 
-  makeMove() {
-    let randomItem = this.getRandomElement(this.board.freeCells);
-    randomItem.eventHandler();
+  makeMove(counter) {
+    let randomItem = this.getRandomElement();
+    return randomItem.setValue(counter);
   }
 
-  getRandomElement(arr) {
+  getRandomElement() {
     let min = 0;
-    let max = arr.length;
+    let max = this.board.freeCells.length - 1;
     let rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
+    return this.board.freeCells[Math.floor(rand)];
   }
 }

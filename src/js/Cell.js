@@ -1,38 +1,12 @@
 import ControllableItem from "./ControllableItem";
 
 export default class Cell extends ControllableItem {
-  constructor(y, x) {
+  constructor() {
     super();
-    this.y = y;
-    this.x = x;
     this.el = document.createElement("div");
     this.el.classList.add("cell");
     this._state = null;
-    this.addToBoard();
-  }
-
-  get x() {
-    return this._x;
-  }
-
-  set x(value) {
-    if (typeof value === "number") {
-      this._x = value;
-    } else {
-      throw new Error("Data type is not correct");
-    }
-  }
-
-  get y() {
-    return this._y;
-  }
-
-  set y(value) {
-    if (typeof value === "number") {
-      this._y = value;
-    } else {
-      throw new Error("Data type is not correct");
-    }
+    this.render();
   }
 
   get state() {
@@ -63,13 +37,20 @@ export default class Cell extends ControllableItem {
     this.el.classList.remove("active-cell");
   }
 
-  enterHandler() {
-    console.log(this);
+  setValue(counter) {
+    if (counter % 2 === 1) {
+      this.state = "o";
+    } else {
+      this.state = "x";
+    }
+    return this.state;
   }
 
-  addToBoard() {
-    Cell.FIELD.appendChild(this.el);
+  enterHandler() {
+    this.emit("selected", this);
+  }
+
+  render() {
+    document.querySelector(".content > .field").appendChild(this.el);
   }
 }
-
-Cell.FIELD = document.querySelector(".field");
